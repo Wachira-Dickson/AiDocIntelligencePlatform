@@ -5,6 +5,7 @@ from fastapi import UploadFile
 from sqlalchemy.orm import Session
 
 from app.models.document import Document
+from app.services.extraction_service import extract_text
 
 UPLOAD_DIR = Path("uploads")
 
@@ -38,6 +39,11 @@ def save_document(
     # Get file size
     file_size = file_path.stat().st_size
 
+    extracted_text = extract_text(
+        str(file_path),
+        file.content_type,
+    )
+
     # Create a new Document instance
     document = Document(
         original_filename=file.filename,
@@ -46,6 +52,7 @@ def save_document(
         content_type=file.content_type,
         file_size=file_size,
         user_id=user_id,
+        extracted_text=extracted_text,
     )
 
     db.add(document)

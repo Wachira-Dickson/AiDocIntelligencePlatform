@@ -48,5 +48,6 @@ async def upload_document(
             "content_type": document.content_type,
             "file_size": document.file_size,
             "uploaded_at": document.uploaded_at.isoformat(),
-        } 
+            "extracted_text": document.extracted_text,
+        }, 
     }
