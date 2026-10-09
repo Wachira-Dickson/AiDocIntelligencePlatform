@@ -18,3 +18,4 @@ class Document(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="documents")
     extracted_text: Mapped[str | None] = mapped_column(Text, nullable=True)
+    chunks = relationship("DocumentChunk", back_populates="document", cascade="all, delete-orphan",)
